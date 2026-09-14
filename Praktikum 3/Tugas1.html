@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 1: Konversi Suhu</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f0f2f5; 
+            padding: 40px; 
+            display: flex;
+            justify-content: center;
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            width: 100%;
+            max-width: 400px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+        input { 
+            padding: 12px; 
+            width: 90%; 
+            margin-bottom: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            text-align: center; 
+        }
+        button { 
+            padding: 12px; 
+            background: #3498db; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            width: 100%; 
+            transition: background 0.3s; 
+        }
+        button:hover { background: #2980b9; }
+        .hasil { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #eaf2f8; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            color: #2c3e50; 
+            text-align: left; 
+            line-height: 1.6;
+        }
+        .pesan-error { color: #e74c3c; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🌡️ Konversi Suhu</h2>
+
+        <input type="number" id="inputCelcius" placeholder="Masukkan Suhu Celcius (°C)">
+
+        <button onclick="konversiSuhu()">Konversi</button>
+
+        <div class="hasil" id="tempatHasil">
+            Hasil konversi akan muncul di sini. 😁
+        </div>
+    </div>
+
+    <script>
+        function konversiSuhu() {
+
+            let teksInput = document.getElementById("inputCelcius").value;
+            let tempatHasil = document.getElementById("tempatHasil");
+
+            if (teksInput === "") {
+                tempatHasil.innerHTML = '<div class="pesan-error">⚠️ Peringatan: Input tidak boleh kosong!</div>';
+                return; 
+            }
+
+            let celcius = parseFloat(teksInput);
+
+            if (isNaN(celcius)) {
+                tempatHasil.innerHTML = '<div class="pesan-error">⚠️ Peringatan: Masukkan angka yang valid!</div>';
+                return; 
+            }
+
+            let fahrenheit = (celcius * 9/5) + 32;
+            let kelvin = celcius + 273.15;
+
+            tempatHasil.innerHTML = 
+                "<strong>Suhu Awal:</strong> " + celcius + " °C<br><hr>" +
+                "<strong>Fahrenheit:</strong> " + fahrenheit.toFixed(2) + " °F<br>" +
+                "<strong>Kelvin:</strong> " + kelvin.toFixed(2) + " K";
+        }
+    </script>
+
+</body>
+</html>
