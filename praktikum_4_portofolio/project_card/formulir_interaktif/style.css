@@ -1,0 +1,159 @@
+/* Reset & Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4f46e5;
+    --dark: #1e293b;
+    --light: #f8fafc;
+    --gray: #64748b;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.main-section {
+    padding: 60px 0;
+}
+
+/* Header */
+.header-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.header-title h1 {
+    font-size: 36px;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.header-title p {
+    color: var(--gray);
+}
+
+/* Form Card (Box Model: Padding, Border, Shadow) */
+.form-card {
+    max-width: 550px;
+    margin: 0 auto 60px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+fieldset {
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+legend {
+    font-weight: 700;
+    color: var(--primary);
+    padding: 0 10px;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.helper-text {
+    display: block;
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 6px;
+}
+
+#pesan-validasi {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Tombol */
+.btn {
+    display: inline-block;
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+}
+
+/* Hasil Pendaftaran (Grid & Card) */
+.result-section h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.member-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+}
+
+.member-card h3 {
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.member-card p {
+    color: var(--gray);
+    font-size: 14px;
+}
