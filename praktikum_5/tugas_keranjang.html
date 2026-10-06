@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Praktikum Keranjang Belanja | Chattama</title>
+    <!-- Instalasi jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; padding: 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; margin-bottom: 20px; }
+        h2 { color: #2a5298; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        .produk-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .btn-tambah { background: #4f46e5; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        
+        #cartList { list-style: none; padding: 0; margin: 0 0 15px 0; }
+        #cartList li { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .total-box { background: #eef2ff; padding: 15px; border-radius: 8px; text-align: right; margin-bottom: 15px; }
+        .btn-checkout { background: #10b981; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-checkout:disabled { background: #ccc; cursor: not-allowed; }
+
+        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+        .modal-content { background: white; width: 90%; max-width: 400px; margin: 10vh auto; padding: 20px; border-radius: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .error-msg { color: #ef4444; font-size: 12px; display: none; margin-top: 4px; }
+        .btn-batal { background: #ef4444; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 48%; }
+        .btn-submit { background: #4f46e5; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 48%; float: right; }
+    </style>
+</head>
+<body>
+
+    <!-- Daftar Produk -->
+    <div class="card">
+        <h2>Daftar Produk</h2>
+        <div class="produk-item">
+            <div>
+                <strong>Flashdisk 32GB</strong><br>
+                <small>Rp 60.000</small>
+            </div>
+            <button class="btn-tambah" data-nama="Flashdisk 32GB" data-harga="60000">Tambah</button>
+        </div>
+        <div class="produk-item">
+            <div>
+                <strong>Mouse Wireless</strong><br>
+                <small>Rp 85.000</small>
+            </div>
+            <button class="btn-tambah" data-nama="Mouse Wireless" data-harga="85000">Tambah</button>
+        </div>
+        <div class="produk-item">
+            <div>
+                <strong>Keyboard Gaming</strong><br>
+                <small>Rp 150.000</small>
+            </div>
+            <button class="btn-tambah" data-nama="Keyboard Gaming" data-harga="150000">Tambah</button>
+        </div>
+    </div>
+
+    <!-- Keranjang Belanja -->
+    <div class="card">
+        <h2>Keranjang Belanja</h2>
+        <ul id="cartList">
+            <li style="color: #888;">Keranjang masih kosong.</li>
+        </ul>
+        <div class="total-box">
+            <span>Total Bayar:</span><br>
+            <span id="cartTotal" style="font-size: 18px;"><strong>Rp 0</strong></span>
+        </div>
+        <button class="btn-checkout" id="btnBukaModal" disabled>Checkout Sekarang</button>
+    </div>
+
+    <div id="modalOverlay">
+        <div class="modal-content">
+            <h2>Data Pembeli</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="namaPembeli" placeholder="Masukkan nama">
+                    <div class="error-msg" id="errNama">Nama tidak boleh kosong.</div>
+                </div>
+                <div class="form-group">
+                    <label>Nomor HP</label>
+                    <input type="number" id="noHp" placeholder="08xxxxxxxxxx">
+                    <div class="error-msg" id="errHp">No HP minimal 10 angka.</div>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Pengiriman</label>
+                    <textarea id="alamat" rows="3" placeholder="Alamat lengkap..."></textarea>
+                    <div class="error-msg" id="errAlamat">Alamat tidak boleh kosong.</div>
+                </div>
+                <div>
+                    <button type="button" class="btn-batal" id="btnTutupModal">Batal</button>
+                    <button type="submit" class="btn-submit">Proses Pesanan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+
+            let cart = [];
+
+            $('.btn-tambah').click(function() {
+                const nama = $(this).data('nama');
+                const harga = parseInt($(this).data('harga'));
+                
+                const existingItem = cart.find(item => item.nama === nama);
+                if (existingItem) {
+                    existingItem.qty += 1;
+                } else {
+                    cart.push({ nama: nama, harga: harga, qty: 1 });
+                }
+                
+                updateCartUI();
+            });
+
+            function updateCartUI() {
+                const $cartList =$('#cartList');
+                $cartList.empty();
+
+                if (cart.length === 0) {
+                    $cartList.html('<li style="color: #888;">Keranjang masih kosong.</li>');
+                    $('#btnBukaModal').prop('disabled', true);
+                    $('#cartTotal').html('<strong>Rp 0</strong>');
+                    return;
+                }
+
+                $('#btnBukaModal').prop('disabled', false);
+                let totalQty = 0;
+
+                cart.forEach(item => {
+                    const subtotal = item.harga * item.qty;
+                    totalQty += item.qty;
+                    $cartList.append(`<li><span>${item.nama} (x${item.qty})</span> <span>Rp ${subtotal.toLocaleString('id-ID')}</span></li>`);
+                });
+
+
+                let totalHarga = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+
+                if (totalHarga > 100000) {
+                    const diskon = totalHarga * 0.1;
+                    totalHarga -= diskon; 
+
+                    $('#cartTotal').html(`
+                        <del style="color:#ef4444; font-size:14px;">Rp ${(totalHarga + diskon).toLocaleString('id-ID')}</del><br>
+                        <strong style="color:#10b981;">Rp ${totalHarga.toLocaleString('id-ID')} (Diskon 10%)</strong>
+                    `);
+                } else {
+                    $('#cartTotal').html(`<strong>Rp ${totalHarga.toLocaleString('id-ID')}</strong>`);
+                }
+            }
+
+            function simpanRiwayat(total, qty) {
+                const riwayat = JSON.parse(localStorage.getItem('riwayat')) || [];
+                riwayat.push({ tanggal: new Date().toISOString(), total: total, qty: qty });
+                localStorage.setItem('riwayat', JSON.stringify(riwayat));
+            }
+
+            $('#btnBukaModal').click(function() {
+                $('#modalOverlay').fadeIn(200);
+            });
+
+            $('#btnTutupModal').click(function() {
+                $('#modalOverlay').fadeOut(200);
+                $('#checkoutForm')[0].reset();
+                $('.error-msg').hide();
+            });
+
+            $('#checkoutForm').submit(function(e) {
+                e.preventDefault(); 
+                
+                let isValid = true;
+                const nama = $('#namaPembeli').val().trim();
+                const noHp = $('#noHp').val().trim();
+                const alamat = $('#alamat').val().trim();
+
+                if (nama === '') {
+                    $('#errNama').slideDown();
+                    isValid = false;
+                } else {
+                    $('#errNama').slideUp();
+                }
+
+                if (noHp === '' || noHp.length < 10) {
+                    $('#errHp').slideDown();
+                    isValid = false;
+                } else {
+                    $('#errHp').slideUp();
+                }
+
+                if (alamat === '') {
+                    $('#errAlamat').slideDown();
+                    isValid = false;
+                } else {
+                    $('#errAlamat').slideUp();
+                }
+
+                if (isValid) {
+                    let totalHargaAkhir = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+                    if (totalHargaAkhir > 100000) {
+                        totalHargaAkhir -= (totalHargaAkhir * 0.1);
+                    }
+                    let totalKuantitas = cart.reduce((sum, item) => sum + item.qty, 0);
+
+                    simpanRiwayat(totalHargaAkhir, totalKuantitas);
+
+                    alert(`Pesanan Berhasil!\nTerima kasih, ${nama}. Pesanan Anda akan dikirim ke ${alamat}.`);
+
+                    cart = [];
+                    updateCartUI();
+                    $('#checkoutForm')[0].reset();
+                    $('#modalOverlay').fadeOut(200);
+
+                    console.log("Riwayat Transaksi:", JSON.parse(localStorage.getItem('riwayat')));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
