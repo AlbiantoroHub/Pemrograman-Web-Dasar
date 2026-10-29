@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cibaduyut Tech | Toko Laptop</title>
+    <!-- Pemanggilan CSS Eksternal -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- CDN jQuery & Validation Plugin -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+</head>
+<body>
+    <a href="../index.html">&larr; Kembali ke portofolio</a>
+
+    <!-- Navigasi -->
+    <nav>
+        <div class="container nav-wrap">
+            <a href="#" class="logo">Cibaduyut Tech.</a>
+            <ul class="nav-menu">
+                <li><a href="#hero">Beranda</a></li>
+                <li><a href="#katalog">Katalog</a></li>
+                <li><a href="#preorder">Pre-Order</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero">
+        <div class="container">
+            <h1>Tingkatkan Produktivitasmu</h1>
+            <p>Temukan laptop dengan performa terbaik untuk gaming, desain, dan coding.</p>
+        </div>
+    </header>
+
+    <!-- Fitur Navigasi Tab & Efek jQuery -->
+    <section id="katalog" class="container section-pad">
+        <h2 class="section-title">Katalog Laptop</h2>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-target="#tab-lenovo">Lenovo</button>
+            <button class="tab-btn" data-target="#tab-asus">ASUS</button>
+        </div>
+
+        <!-- Tab Content: Lenovo -->
+        <div id="tab-lenovo" class="tab-content grid-katalog">
+            <div class="card">
+                <h3>Lenovo Legion 5</h3>
+                <p>AMD Ryzen 7, NVIDIA GeForce RTX 4060, Layar 100% sRGB. Performa maksimal untuk gaming dan rendering tanpa lag.</p>
+                <div class="harga">Rp 30.500.000</div>
+            </div>
+            <div class="card">
+                <h3>Lenovo IdeaPad Gaming 3</h3>
+                <p>AMD Ryzen 5, RTX 3050. Pilihan tepat untuk entry-level gamer dengan budget pelajar.</p>
+                <div class="harga">Rp 12.000.000</div>
+            </div>
+        </div>
+
+        <!-- Tab Content: ASUS -->
+        <div id="tab-asus" class="tab-content grid-katalog" style="display: none;">
+            <div class="card">
+                <h3>ASUS ROG Strix G15</h3>
+                <p>Layar 165Hz, sistem pendingin cair, dan keyboard RGB per-key. Sangat mulus untuk kompetitif e-sports.</p>
+                <div class="harga">Rp 25.000.000</div>
+            </div>
+            <div class="card">
+                <h3>ASUS Vivobook Pro 15 OLED</h3>
+                <p>Layar OLED memukau untuk akurasi warna desainer dan kreator konten.</p>
+                <div class="harga">Rp 14.500.000</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Kompleks & Validasi Plugin -->
+    <section id="preorder" class="form-section section-pad">
+        <div class="container">
+            <h2 class="section-title">Form Pre-Order</h2>
+            <form id="formOrder" class="form-box">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" placeholder="Sesuai KTP">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="email@contoh.com">
+                </div>
+                <div class="form-group">
+                    <label for="hp">Nomor HP</label>
+                    <input type="text" id="hp" name="hp" placeholder="Awali dengan 08">
+                </div>
+                <div class="form-group">
+                    <label for="tipe">Tipe Laptop</label>
+                    <select id="tipe" name="tipe">
+                        <option value="">-- Pilih Tipe --</option>
+                        <option value="Legion 5">Lenovo Legion 5</option>
+                        <option value="IdeaPad">Lenovo IdeaPad Gaming 3</option>
+                        <option value="ROG Strix">ASUS ROG Strix G15</option>
+                        <option value="Vivobook">ASUS Vivobook Pro 15</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Pengiriman</label>
+                    <textarea id="alamat" name="alamat" rows="3" placeholder="Alamat lengkap beserta kode pos"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="password">Buat Password Akun Pembeli</label>
+                    <input type="password" id="password" name="password" placeholder="Minimal 8 karakter (huruf & angka)">
+                </div>
+                <button type="submit" class="btn-submit">Proses Pesanan</button>
+                
+                <div id="pesanSukses" class="alert-sukses">
+                    <strong>Berhasil!</strong> Pesanan Anda sedang kami proses. Cek email untuk instruksi pembayaran.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Cibaduyut Tech | Praktikum Pemrograman Web Dasar - Tugas Mandiri</p>
+    </footer>
+
+    <!-- Pemanggilan File JS Eksternal -->
+    <script src="script.js"></script>
+</body>
+</html>
