@@ -3,40 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALBIANTOROHUB // NIGHT CITY NET-PORTAL [aaPanel]</title>
-
-    <!-- Google Fonts: Orbitron, Rajdhani, Share Tech Mono -->
+    <meta name="generator" content="aaPanel">
+    <title>ALBIANTOROHUB // NIGHT CITY NET-PORTAL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-    <!-- External Cyberpunk Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="edgerunner-mode">
-    <!-- Deployed via aaPanel // Night City Subplot Node 37 -->
 
-    <!-- CRT Scanline, Vignette & Flicker Overlay -->
     <div class="crt-overlay" aria-hidden="true"></div>
     <div class="crt-flicker" aria-hidden="true"></div>
     <div class="bg-grid" aria-hidden="true"></div>
 
-    <!-- Top Cyberware HUD Bar -->
     <div class="hud-topbar">
         <div class="hud-topbar-left">
-            <span class="hud-dot"></span>
-            <span>SYS.NODE // STUDENT_37</span>
+            <span class="hud-status">SYS.INF // STUDENT_1069</span>
             <span class="hud-divider">|</span>
-            <span>LOC: NIGHT_CITY // SANTO_DOMINGO</span>
+            <span>LOC: PONTIANAK_KALBAR // UNIVERSITAS_TANJUNGPURA</span>
         </div>
         <div class="hud-topbar-right">
-            <span id="hud-clock">00:00:00</span>
+            <span>PORTFOLIO_ARCHIVE // PEMROGRAMAN_WEB_DASAR</span>
             <span class="hud-divider">|</span>
-            <span class="hud-status">SANDY_OS: v4.02 [ONLINE]</span>
+            <span class="hud-status">STATUS: ACTIVE</span>
         </div>
     </div>
 
-    <!-- Header -->
     <header class="cyber-header">
         <div class="header-container">
             <a href="index.html" class="brand-logo" aria-label="AlbiantoroHub Home">
@@ -47,11 +39,6 @@
             </a>
 
             <div class="header-controls">
-                <button id="audio-toggle" class="cyber-audio-btn" type="button" title="Toggle Cyber Audio SFX" aria-label="Toggle Audio SFX">
-                    <span class="audio-indicator" id="audio-indicator">SFX: ON</span>
-                </button>
-
-                <!-- Cyberware Theme Switcher -->
                 <button id="theme-toggle" class="cyberware-switch" type="button" aria-pressed="false">
                     <span class="switch-corner"></span>
                     <span class="switch-led"></span>
@@ -64,16 +51,14 @@
         </div>
     </header>
 
-    <!-- Main Container -->
     <main class="cyber-main">
 
-        <!-- Hero Section: Fixer Dossier -->
         <section class="hero-section">
             <div class="hero-hud-frame">
                 <div class="hud-meta-row">
                     <span class="meta-badge">DOSSIER // ID: H1101251069</span>
                     <span class="meta-badge meta-alert">THREAT_LEVEL: MAXIMUM</span>
-                    <span class="meta-badge" id="mode-status-badge">CHASSIS: SANDEVISTAN // DAVID_M</span>
+                    <span class="meta-badge" id="mode-status-badge">CHASSIS : SISTEM INFORMASI // CHATTAMA_A</span>
                 </div>
 
                 <p class="hero-pretitle">&gt;&gt; INCOMING FIXER TRANSMISSION // AFTERLIFE ARCHIVE</p>
@@ -83,16 +68,17 @@
                 </h1>
 
                 <p class="hero-description">
-                    Yo, Choom. Selamat datang di <span class="text-highlight">AlbiantoroHub</span>—data-fortress resmi milik 
-                    <strong>Chattama Albiantoro</strong>. Semua kontrak pengembangan antarmuka web, modul peretasan DOM, dan arsitektur 
-                    sistem informasi di bawah ini sudah terverifikasi oleh Fixer Night City. Pilih gig di bawah untuk membuka 
-                    koneksi langsung ke subnet proyek.
+                    Yo, Choom. Selamat datang di <span class="text-highlight">AlbiantoroHub</span>; data-fortress resmi milik <strong>Chattama Albiantoro</strong>. Dari ngebangun kerangka dasar web pakai HTML dan masang <em>chrome</em> visual CSS biar tampilannya <em>preem</em>, sampai nyuntikin <em>cyberware</em> jQuery biar antarmukanya hidup dan interaktif. Sistem ini juga udah di-<em>upgrade</em> ngelewatin latihan perakitan formulir anti-retas dan implementasi teknologi <em>auto-scaling</em> Bootstrap 5 yang bikin web tetap mulus dibuka lewat layar <em>cyberoptic</em> mana pun. Semua perjalanan dari nol itu kini dirakit jadi satu arsip utuh yang siap nerima kontrak dari <em>Fixer</em> mana pun di Night City! 
                 </p>
+
+                <div class="hero-cta-highlight">
+                    &gt;&gt; Pilih gig di bawah untuk membuka koneksi langsung ke subnet proyek.
+                </div>
 
                 <div class="hero-stats">
                     <div class="stat-box">
                         <span class="stat-label">TOTAL GIGS</span>
-                        <span class="stat-value" id="stat-total">08</span>
+                        <span class="stat-value" id="stat-total">07</span>
                     </div>
                     <div class="stat-box">
                         <span class="stat-label">CRED LEVEL</span>
@@ -106,40 +92,37 @@
             </div>
         </section>
 
-        <!-- Hacking Terminal Search Bar -->
         <section class="terminal-section" aria-label="Filter Proyek">
             <div class="terminal-header">
                 <div class="terminal-title">
                     <span class="terminal-dot red"></span>
                     <span class="terminal-dot yellow"></span>
                     <span class="terminal-dot cyan"></span>
-                    <span>BREACH_PROTOCOL // SUBNET_QUERY.EXE</span>
+                    <span>NEURAL_LINK // PROJECT_SCANNER</span>
                 </div>
                 <div class="terminal-counter">
-                    DISPLAYING: <span id="visible-count">8</span> / <span id="total-count">8</span> DATABANKS
+                    DISPLAYING: <span id="visible-count">7</span> / <span id="total-count">7</span> DATABANKS
                 </div>
             </div>
 
             <div class="terminal-body">
                 <label for="terminal-search" class="terminal-prompt">
-                    root@nightcity:~/albiantorohub# <span class="prompt-cmd">grep -i</span>
+                    SCAN_QUERY // <span class="prompt-cmd">FILTER &gt;&gt;</span>
                 </label>
                 <div class="terminal-input-wrap">
                     <input
                         type="text"
                         id="terminal-search"
                         class="terminal-input"
-                        placeholder="Ketik kata kunci kontrak (mis. HTML, CSS, Form, jQuery, Nexus, Presentasi)..."
+                        placeholder="Ketik kata kunci kontrak (mis. HTML, CSS, JS, jQuery)..."
                         autocomplete="off"
                         spellcheck="false"
                     >
-                    <span class="terminal-cursor" aria-hidden="true">█</span>
                     <button type="button" id="clear-search" class="terminal-clear-btn" hidden>CLR [ESC]</button>
                 </div>
             </div>
         </section>
 
-        <!-- Project Grid -->
         <section class="projects-section" aria-label="Daftar Kontrak Proyek">
             <div class="section-heading">
                 <h2 class="section-title">// ACTIVE_GIGS_DATABASE</h2>
@@ -148,7 +131,6 @@
 
             <div class="project-grid" id="project-grid">
 
-                <!-- 1. Praktikum 1 -->
                 <article class="cyber-card" data-keywords="praktikum 1 struktur dasar html dokumen teks gambar hyperlink">
                     <div class="card-topline">
                         <span class="card-id">GIG // 01</span>
@@ -167,7 +149,6 @@
                     </div>
                 </article>
 
-                <!-- 2. Praktikum 2 -->
                 <article class="cyber-card" data-keywords="praktikum 2 dasar css cascading style sheets warna tipografi layout">
                     <div class="card-topline">
                         <span class="card-id">GIG // 02</span>
@@ -186,7 +167,6 @@
                     </div>
                 </article>
 
-                <!-- 3. Praktikum 3 (3 Links) -->
                 <article class="cyber-card" data-keywords="praktikum 3 form tabel multimedia tugas 1 tugas 2 tugas 3 input semantik">
                     <div class="card-topline">
                         <span class="card-id">GIG // 03</span>
@@ -210,7 +190,6 @@
                     </div>
                 </article>
 
-                <!-- 4. Praktikum 4 -->
                 <article class="cyber-card" data-keywords="praktikum 4 portofolio dasar multi halaman html css profil kalkulator">
                     <div class="card-topline">
                         <span class="card-id">GIG // 04</span>
@@ -229,7 +208,6 @@
                     </div>
                 </article>
 
-                <!-- 5. Praktikum 5 -->
                 <article class="cyber-card" data-keywords="praktikum 5 jquery dom manipulasi javascript keranjang belanja interaktif">
                     <div class="card-topline">
                         <span class="card-id">GIG // 05</span>
@@ -248,7 +226,6 @@
                     </div>
                 </article>
 
-                <!-- 6. Praktikum 6 -->
                 <article class="cyber-card" data-keywords="praktikum 6 cibaduyut tech toko laptop jquery animasi validasi form">
                     <div class="card-topline">
                         <span class="card-id">GIG // 06</span>
@@ -267,7 +244,6 @@
                     </div>
                 </article>
 
-                <!-- 7. Praktikum 7 -->
                 <article class="cyber-card" data-keywords="praktikum 7 portal berita nexus gaming bootstrap 5 grid responsif">
                     <div class="card-topline">
                         <span class="card-id">GIG // 07</span>
@@ -286,28 +262,8 @@
                     </div>
                 </article>
 
-                <!-- 8. Proyek Presentasi -->
-                <article class="cyber-card" data-keywords="proyek presentasi slide deck materi demo">
-                    <div class="card-topline">
-                        <span class="card-id">GIG // 08</span>
-                        <span class="card-tier">HOLODECK</span>
-                    </div>
-                    <h3 class="card-title">Proyek Presentasi</h3>
-                    <p class="card-subtitle">Deck Presentasi Interaktif</p>
-                    <p class="card-desc">
-                        Modul proyeksi materi dan demonstrasi teknis berbasis web untuk pemaparan arsitektur proyek secara terstruktur.
-                    </p>
-                    <div class="card-actions">
-                        <a href="Presentasi/index.html" class="cyber-btn">
-                            <span class="btn-text">JACK IN // EXECUTE</span>
-                            <span class="btn-arrow">&rarr;</span>
-                        </a>
-                    </div>
-                </article>
-
             </div>
 
-            <!-- Empty Search State -->
             <div id="empty-state" class="cyber-empty-state" hidden>
                 <div class="empty-code">ERR_404 // NO_SUBNET_MATCH</div>
                 <p class="empty-msg">Tidak ditemukan kontrak proyek yang cocok dengan parameter pencarian: <span id="empty-query" class="text-highlight"></span></p>
@@ -316,7 +272,6 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="cyber-footer">
         <div class="footer-inner">
             <div class="footer-left">
@@ -324,12 +279,11 @@
                 <span class="footer-copy">&copy; 2026 CHATTAMA ALBIANTORO (H1101251069). ALL RIGHTS RESERVED.</span>
             </div>
             <div class="footer-right">
-                <span class="footer-sig">DEPLOYMENT: AAPANEL_NODE_37 // NIGHT_CITY_PROTOCOL</span>
+                <span class="footer-sig">DEPLOYMENT: NODE_1069 // NIGHT_CITY_PROTOCOL</span>
             </div>
         </div>
     </footer>
 
-    <!-- External Cyberpunk Script -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,25 +1,14 @@
-/* ==========================================================================
-   ALBIANTOROHUB // CYBERPUNK: EDGERUNNERS UI SYSTEM
-   Palettes:
-   - Void Black: #0d0d0d / #111111
-   - David Martinez Yellow: #f3e600
-   - Lucy Netrunner Cyan: #00f0ff
-   - Night City Neon Pink: #ff003c
-   ========================================================================== */
-
 :root {
     --bg-void: #0d0d0d;
     --bg-surface: #121318;
     --bg-card: rgba(18, 20, 27, 0.88);
     --bg-terminal: rgba(10, 12, 16, 0.94);
 
-    /* Core Edgerunner Palette */
     --yellow-david: #f3e600;
     --cyan-lucy: #00f0ff;
     --pink-neon: #ff003c;
     --purple-deep: #9d00ff;
 
-    /* Dynamic Theme Tokens (Default: Edgerunner Mode - David Yellow) */
     --accent-primary: #f3e600;
     --accent-secondary: #00f0ff;
     --accent-danger: #ff003c;
@@ -37,7 +26,6 @@
     --font-mono: 'Share Tech Mono', monospace;
 }
 
-/* Netrunner Mode (Lucy Cyan / Deep Purple) */
 body.netrunner-mode {
     --bg-void: #080711;
     --bg-surface: #100d21;
@@ -53,9 +41,6 @@ body.netrunner-mode {
     --text-on-accent: #080711;
 }
 
-/* ==========================================================================
-   RESET & BASE
-   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -85,9 +70,6 @@ body {
     color: var(--text-on-accent);
 }
 
-/* ==========================================================================
-   CRT SCANLINES, FLICKER & CYBER GRID OVERLAYS
-   ========================================================================== */
 .bg-grid {
     position: fixed;
     inset: 0;
@@ -138,9 +120,6 @@ body {
     100% { opacity: 0.16; }
 }
 
-/* ==========================================================================
-   TOP TELEMETRY HUD BAR
-   ========================================================================== */
 .hud-topbar {
     display: flex;
     justify-content: space-between;
@@ -161,31 +140,14 @@ body {
     gap: 10px;
 }
 
-.hud-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--accent-primary);
-    box-shadow: 0 0 8px var(--accent-primary);
-    display: inline-block;
-    animation: pulseDot 1.6s infinite;
-}
-
-@keyframes pulseDot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.35; transform: scale(0.8); }
+.hud-status {
+    color: var(--accent-primary);
 }
 
 .hud-divider {
     color: var(--pink-neon);
 }
 
-.hud-status {
-    color: var(--accent-primary);
-}
-
-/* ==========================================================================
-   HEADER & CYBERWARE SWITCH
-   ========================================================================== */
 .cyber-header {
     position: sticky;
     top: 0;
@@ -233,14 +195,6 @@ body {
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.brand-logo:hover .brand-text {
-    color: var(--cyan-lucy);
-    text-shadow:
-        0 0 10px var(--cyan-lucy),
-        0 0 25px var(--cyan-lucy),
-        2px 0 0 var(--pink-neon);
-}
-
 .brand-tag {
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -255,25 +209,6 @@ body {
     display: flex;
     align-items: center;
     gap: 14px;
-}
-
-.cyber-audio-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--accent-secondary);
-    color: var(--accent-secondary);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    padding: 10px 14px;
-    cursor: pointer;
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-    transition: all 0.2s ease;
-}
-
-.cyber-audio-btn:hover {
-    background: var(--accent-secondary);
-    color: #0d0d0d;
-    box-shadow: 0 0 14px var(--accent-secondary);
 }
 
 .cyberware-switch {
@@ -336,9 +271,6 @@ body {
     letter-spacing: 0.1em;
 }
 
-/* ==========================================================================
-   MAIN CONTAINER & HERO FIXER SECTION
-   ========================================================================== */
 .cyber-main {
     max-width: 1240px;
     margin: 0 auto;
@@ -365,17 +297,6 @@ body {
         0 calc(100% - 22px)
     );
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(0, 0, 0, 0.6);
-}
-
-.hero-hud-frame::before {
-    content: "NIGHT_CITY // FIXER_ARCHIVE_V2.077";
-    position: absolute;
-    top: 10px;
-    right: 36px;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
 }
 
 .hud-meta-row {
@@ -410,7 +331,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* GLITCH HERO TITLE */
 .glitch-title {
     position: relative;
     display: inline-block;
@@ -419,62 +339,36 @@ body {
     font-size: clamp(1.75rem, 4vw, 3.1rem);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    line-height: 1.15;
+    line-height: 1.18;
     color: var(--text-main);
-    text-shadow: 0 0 14px var(--accent-glow);
+    text-shadow:
+        2px 2px 0 var(--pink-neon),
+        -1px -1px 0 var(--cyan-lucy),
+        0 0 18px var(--accent-glow);
     margin-bottom: 18px;
-}
-
-.glitch-title::before,
-.glitch-title::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.glitch-title::before {
-    left: 2px;
-    text-shadow: -2px 0 var(--pink-neon);
-    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    animation: glitchAnimTop 2.8s infinite linear alternate-reverse;
-}
-
-.glitch-title::after {
-    left: -2px;
-    text-shadow: -2px 0 var(--cyan-lucy);
-    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    animation: glitchAnimBottom 2.2s infinite linear alternate-reverse;
-}
-
-@keyframes glitchAnimTop {
-    0%   { clip-path: inset(8% 0 82% 0); transform: translate(-2px, -1px); }
-    15%  { clip-path: inset(42% 0 40% 0); transform: translate(2px, 1px); }
-    30%  { clip-path: inset(75% 0 6% 0); transform: translate(-3px, 0); }
-    45%  { clip-path: inset(18% 0 62% 0); transform: translate(1px, -2px); }
-    60%  { clip-path: inset(54% 0 26% 0); transform: translate(-2px, 2px); }
-    75%  { clip-path: inset(5% 0 88% 0); transform: translate(3px, 1px); }
-    90%  { clip-path: inset(63% 0 14% 0); transform: translate(-1px, -1px); }
-    100% { clip-path: inset(28% 0 58% 0); transform: translate(0, 0); }
-}
-
-@keyframes glitchAnimBottom {
-    0%   { clip-path: inset(65% 0 12% 0); transform: translate(2px, 1px); }
-    20%  { clip-path: inset(12% 0 70% 0); transform: translate(-2px, -1px); }
-    40%  { clip-path: inset(48% 0 33% 0); transform: translate(3px, 0); }
-    60%  { clip-path: inset(82% 0 4% 0); transform: translate(-3px, 1px); }
-    80%  { clip-path: inset(24% 0 55% 0); transform: translate(1px, -2px); }
-    100% { clip-path: inset(52% 0 22% 0); transform: translate(0, 0); }
 }
 
 .hero-description {
     max-width: 820px;
     font-size: 1.12rem;
     color: var(--text-muted);
+    margin-bottom: 18px;
+    text-align: justify;
+}
+
+.hero-cta-highlight {
+    display: inline-block;
+    max-width: 820px;
     margin-bottom: 26px;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent-primary);
+    background: var(--accent-glow-soft);
+    border: 1px solid var(--accent-border);
+    border-left: 4px solid var(--accent-primary);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    text-shadow: 0 0 8px var(--accent-glow);
 }
 
 .text-highlight {
@@ -512,9 +406,6 @@ body {
     color: var(--accent-primary);
 }
 
-/* ==========================================================================
-   HACKING TERMINAL SEARCH BAR
-   ========================================================================== */
 .terminal-section {
     margin-bottom: 44px;
     background: var(--bg-terminal);
@@ -623,19 +514,6 @@ body {
     color: var(--text-dim);
 }
 
-.terminal-cursor {
-    font-family: var(--font-mono);
-    color: var(--accent-primary);
-    text-shadow: 0 0 8px var(--accent-primary);
-    animation: cursorBlink 0.9s steps(2, start) infinite;
-    user-select: none;
-}
-
-@keyframes cursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
 .terminal-clear-btn {
     background: var(--pink-neon);
     color: #fff;
@@ -647,9 +525,6 @@ body {
     clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
 }
 
-/* ==========================================================================
-   PROJECT GRID & CLIPPED CYBERPUNK CARDS
-   ========================================================================== */
 .section-heading {
     display: flex;
     align-items: center;
@@ -717,19 +592,6 @@ body {
     transform: translateY(-4px);
 }
 
-/* 0.2s Glitch Shake Triggered via JS on Hover */
-.cyber-card.card-glitching {
-    animation: cardGlitchShake 0.2s steps(2, end);
-}
-
-@keyframes cardGlitchShake {
-    0%   { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
-    25%  { transform: translate(-4px, 2px) skewX(-2deg); filter: drop-shadow(3px 0 var(--pink-neon)); }
-    50%  { transform: translate(4px, -2px) skewX(2deg); filter: drop-shadow(-3px 0 var(--cyan-lucy)); }
-    75%  { transform: translate(-2px, -1px) skewX(-1deg); }
-    100% { transform: translate(0, -4px) skewX(0deg); filter: none; }
-}
-
 .card-topline {
     display: flex;
     justify-content: space-between;
@@ -788,7 +650,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Clipped Geometric Buttons with Neon Glow */
 .cyber-btn {
     position: relative;
     display: inline-flex;
@@ -844,9 +705,6 @@ body {
     transform: translateX(4px);
 }
 
-/* ==========================================================================
-   EMPTY SEARCH STATE
-   ========================================================================== */
 .cyber-empty-state {
     margin-top: 24px;
     padding: 36px 24px;
@@ -870,9 +728,6 @@ body {
     color: var(--text-muted);
 }
 
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
 .cyber-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.85);
@@ -907,9 +762,6 @@ body {
     color: var(--accent-secondary);
 }
 
-/* ==========================================================================
-   RESPONSIVE BREAKPOINTS
-   ========================================================================== */
 @media (max-width: 768px) {
     .hud-topbar {
         flex-direction: column;
@@ -928,11 +780,5 @@ body {
 
     .hero-hud-frame {
         padding: 28px 20px;
-    }
-
-    .hero-hud-frame::before {
-        position: static;
-        display: block;
-        margin-bottom: 8px;
     }
 }
