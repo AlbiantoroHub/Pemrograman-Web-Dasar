@@ -26,7 +26,6 @@
         <div class="hasil">Hasil: <span id="hasilAngka">0</span></div>
     </div>
     <script>
-        // Penjelasan: document.getElementById digunakan untuk mengambil nilai dari tag HTML
         function tambah() {
             let a = parseFloat(document.getElementById('angka1').value);
             let b = parseFloat(document.getElementById('angka2').value);
@@ -45,7 +44,6 @@
         function bagi() {
             let a = parseFloat(document.getElementById('angka1').value);
             let b = parseFloat(document.getElementById('angka2').value);
-            // Validasi pencegahan pembagian dengan angka 0
             if (b === 0) {
                 alert('Peringatan: Tidak bisa membagi angka dengan 0!');
                 return;

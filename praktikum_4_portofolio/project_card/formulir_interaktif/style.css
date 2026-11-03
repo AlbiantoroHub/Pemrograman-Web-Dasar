@@ -1,4 +1,3 @@
-/* Reset & Variables */
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +29,6 @@ body {
     padding: 60px 0;
 }
 
-/* Header */
 .header-title {
     text-align: center;
     margin-bottom: 35px;
@@ -46,7 +44,6 @@ body {
     color: var(--gray);
 }
 
-/* Form Card (Box Model: Padding, Border, Shadow) */
 .form-card {
     max-width: 550px;
     margin: 0 auto 60px;
@@ -102,7 +99,6 @@ legend {
     margin-bottom: 15px;
 }
 
-/* Tombol */
 .btn {
     display: inline-block;
     width: 100%;
@@ -122,7 +118,6 @@ legend {
     box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
 }
 
-/* Hasil Pendaftaran (Grid & Card) */
 .result-section h2 {
     text-align: center;
     font-size: 28px;

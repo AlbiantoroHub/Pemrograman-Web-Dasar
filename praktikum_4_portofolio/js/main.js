@@ -1,4 +1,3 @@
-// =========== 1. TYPING EFFECT (Halaman Home) ===========
 const typingText = document.getElementById('typing-text');
 
 if (typingText) {
@@ -32,15 +31,13 @@ if (typingText) {
     typeEffect(); 
 }
 
-
-// =========== 2. GENERATE PROJECT CARDS (Halaman Home) ===========
 const projectGrid = document.getElementById('project-grid');
 
 if (projectGrid) {
     const projects = [
         { 
             title: 'Website Profil', 
-            desc: 'Platform penyaluran donasi interaktif menggunakan HTML, CSS.', 
+            desc: 'Halaman profil pribadi, jadwal kuliah, dan kontak menggunakan HTML dan CSS.', 
             image: 'https://placehold.co/600x400/4f46e5/ffffff?text=Website+Profil' ,
             link: 'project_card/website_profil/index.html'
         },
@@ -73,25 +70,20 @@ if (projectGrid) {
     });
 }
 
-
-// =========== 3. FITUR TAMBAHAN: VALIDASI FORM (Halaman Contact) ===========
 const contactForm = document.getElementById('contact-form');
 
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
-        // Mencegah halaman melakukan reload saat form dikirim (Materi Kuis Soal 15)
         e.preventDefault();
 
         const nama = document.getElementById('nama').value;
         const email = document.getElementById('email').value;
         const pesan = document.getElementById('pesan').value;
 
-        // Validasi apakah ada kolom yang masih kosong
         if (nama === '' || email === '' || pesan === '') {
             alert('Mohon lengkapi seluruh kolom (Nama, Email, dan Pesan) sebelum mengirim!');
         } else {
             alert(`Terima kasih ${nama}! Pesan Anda telah berhasil dikirim.`);
-            // Mengosongkan kembali isi input setelah berhasil
             document.getElementById('nama').value = '';
             document.getElementById('email').value = '';
             document.getElementById('pesan').value = '';
