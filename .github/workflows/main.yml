@@ -3,6 +3,7 @@ name: Deploy to Teacher Server
 on:
   push:
     branches:
+      - main
       - master
   workflow_dispatch:
 
