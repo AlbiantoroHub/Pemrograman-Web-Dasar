@@ -1,0 +1,938 @@
+/* ==========================================================================
+   ALBIANTOROHUB // CYBERPUNK: EDGERUNNERS UI SYSTEM
+   Palettes:
+   - Void Black: #0d0d0d / #111111
+   - David Martinez Yellow: #f3e600
+   - Lucy Netrunner Cyan: #00f0ff
+   - Night City Neon Pink: #ff003c
+   ========================================================================== */
+
+:root {
+    --bg-void: #0d0d0d;
+    --bg-surface: #121318;
+    --bg-card: rgba(18, 20, 27, 0.88);
+    --bg-terminal: rgba(10, 12, 16, 0.94);
+
+    /* Core Edgerunner Palette */
+    --yellow-david: #f3e600;
+    --cyan-lucy: #00f0ff;
+    --pink-neon: #ff003c;
+    --purple-deep: #9d00ff;
+
+    /* Dynamic Theme Tokens (Default: Edgerunner Mode - David Yellow) */
+    --accent-primary: #f3e600;
+    --accent-secondary: #00f0ff;
+    --accent-danger: #ff003c;
+    --accent-glow: rgba(243, 230, 0, 0.55);
+    --accent-glow-soft: rgba(243, 230, 0, 0.16);
+    --accent-border: rgba(243, 230, 0, 0.45);
+    --text-on-accent: #0d0d0d;
+
+    --text-main: #f2f5f8;
+    --text-muted: #93a1b0;
+    --text-dim: #5a6775;
+
+    --font-display: 'Orbitron', sans-serif;
+    --font-sans: 'Rajdhani', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+}
+
+/* Netrunner Mode (Lucy Cyan / Deep Purple) */
+body.netrunner-mode {
+    --bg-void: #080711;
+    --bg-surface: #100d21;
+    --bg-card: rgba(17, 13, 36, 0.88);
+    --bg-terminal: rgba(10, 8, 24, 0.95);
+
+    --accent-primary: #00f0ff;
+    --accent-secondary: #ff003c;
+    --accent-danger: #f3e600;
+    --accent-glow: rgba(0, 240, 255, 0.6);
+    --accent-glow-soft: rgba(157, 0, 255, 0.24);
+    --accent-border: rgba(0, 240, 255, 0.48);
+    --text-on-accent: #080711;
+}
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-void);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+    background: var(--accent-primary);
+    color: var(--text-on-accent);
+}
+
+/* ==========================================================================
+   CRT SCANLINES, FLICKER & CYBER GRID OVERLAYS
+   ========================================================================== */
+.bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        radial-gradient(circle at 15% 15%, var(--accent-glow-soft), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(255, 0, 60, 0.12), transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+    pointer-events: none;
+}
+
+.crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.36) 50%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.03),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.03)
+        );
+    background-size: 100% 3px, 6px 100%;
+    box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.75);
+}
+
+.crt-flicker {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.015);
+    animation: crtFlicker 0.18s infinite;
+}
+
+@keyframes crtFlicker {
+    0%   { opacity: 0.12; }
+    25%  { opacity: 0.25; }
+    50%  { opacity: 0.08; }
+    75%  { opacity: 0.32; }
+    100% { opacity: 0.16; }
+}
+
+/* ==========================================================================
+   TOP TELEMETRY HUD BAR
+   ========================================================================== */
+.hud-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 28px;
+    background: rgba(0, 0, 0, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.hud-topbar-left,
+.hud-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hud-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+    display: inline-block;
+    animation: pulseDot 1.6s infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+.hud-divider {
+    color: var(--pink-neon);
+}
+
+.hud-status {
+    color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   HEADER & CYBERWARE SWITCH
+   ========================================================================== */
+.cyber-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 13, 13, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--accent-primary);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.75), 0 0 18px var(--accent-glow-soft);
+}
+
+.header-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text-main);
+    position: relative;
+}
+
+.brand-bracket {
+    color: var(--pink-neon);
+    text-shadow: 0 0 10px var(--pink-neon);
+}
+
+.brand-text {
+    color: var(--accent-primary);
+    text-shadow:
+        0 0 8px var(--accent-glow),
+        0 0 22px var(--accent-glow);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.brand-logo:hover .brand-text {
+    color: var(--cyan-lucy);
+    text-shadow:
+        0 0 10px var(--cyan-lucy),
+        0 0 25px var(--cyan-lucy),
+        2px 0 0 var(--pink-neon);
+}
+
+.brand-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    background: var(--pink-neon);
+    color: #fff;
+    letter-spacing: 0.14em;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cyber-audio-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--accent-secondary);
+    color: var(--accent-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    padding: 10px 14px;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    transition: all 0.2s ease;
+}
+
+.cyber-audio-btn:hover {
+    background: var(--accent-secondary);
+    color: #0d0d0d;
+    box-shadow: 0 0 14px var(--accent-secondary);
+}
+
+.cyberware-switch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.85));
+    border: 1px solid var(--accent-primary);
+    border-left: 5px solid var(--accent-primary);
+    color: var(--text-main);
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    box-shadow: 0 0 14px var(--accent-glow-soft);
+    transition: all 0.25s ease;
+}
+
+.cyberware-switch:hover {
+    background: var(--accent-primary);
+    color: var(--text-on-accent);
+    box-shadow:
+        0 0 18px var(--accent-primary),
+        0 0 34px var(--accent-glow);
+    transform: translateY(-1px);
+}
+
+.switch-led {
+    width: 10px;
+    height: 10px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px var(--accent-primary);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    transition: background 0.25s ease;
+}
+
+.cyberware-switch:hover .switch-led {
+    background: var(--pink-neon);
+    box-shadow: 0 0 10px var(--pink-neon);
+}
+
+.switch-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+}
+
+.switch-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    opacity: 0.78;
+}
+
+.switch-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   MAIN CONTAINER & HERO FIXER SECTION
+   ========================================================================== */
+.cyber-main {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 36px 28px 80px;
+}
+
+.hero-section {
+    margin-bottom: 42px;
+}
+
+.hero-hud-frame {
+    position: relative;
+    padding: 38px 36px;
+    background:
+        linear-gradient(125deg, rgba(243, 230, 0, 0.06) 0%, rgba(18, 20, 27, 0.94) 45%, rgba(255, 0, 60, 0.07) 100%);
+    border: 1px solid var(--accent-border);
+    border-left: 6px solid var(--accent-primary);
+    clip-path: polygon(
+        0 0,
+        calc(100% - 28px) 0,
+        100% 28px,
+        100% 100%,
+        22px 100%,
+        0 calc(100% - 22px)
+    );
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.hero-hud-frame::before {
+    content: "NIGHT_CITY // FIXER_ARCHIVE_V2.077";
+    position: absolute;
+    top: 10px;
+    right: 36px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+}
+
+.hud-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.meta-badge {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--accent-secondary);
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+}
+
+.meta-badge.meta-alert {
+    border-color: var(--pink-neon);
+    color: var(--pink-neon);
+    background: rgba(255, 0, 60, 0.1);
+}
+
+.hero-pretitle {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-primary);
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+}
+
+/* GLITCH HERO TITLE */
+.glitch-title {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 4vw, 3.1rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.15;
+    color: var(--text-main);
+    text-shadow: 0 0 14px var(--accent-glow);
+    margin-bottom: 18px;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.glitch-title::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--pink-neon);
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    animation: glitchAnimTop 2.8s infinite linear alternate-reverse;
+}
+
+.glitch-title::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--cyan-lucy);
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    animation: glitchAnimBottom 2.2s infinite linear alternate-reverse;
+}
+
+@keyframes glitchAnimTop {
+    0%   { clip-path: inset(8% 0 82% 0); transform: translate(-2px, -1px); }
+    15%  { clip-path: inset(42% 0 40% 0); transform: translate(2px, 1px); }
+    30%  { clip-path: inset(75% 0 6% 0); transform: translate(-3px, 0); }
+    45%  { clip-path: inset(18% 0 62% 0); transform: translate(1px, -2px); }
+    60%  { clip-path: inset(54% 0 26% 0); transform: translate(-2px, 2px); }
+    75%  { clip-path: inset(5% 0 88% 0); transform: translate(3px, 1px); }
+    90%  { clip-path: inset(63% 0 14% 0); transform: translate(-1px, -1px); }
+    100% { clip-path: inset(28% 0 58% 0); transform: translate(0, 0); }
+}
+
+@keyframes glitchAnimBottom {
+    0%   { clip-path: inset(65% 0 12% 0); transform: translate(2px, 1px); }
+    20%  { clip-path: inset(12% 0 70% 0); transform: translate(-2px, -1px); }
+    40%  { clip-path: inset(48% 0 33% 0); transform: translate(3px, 0); }
+    60%  { clip-path: inset(82% 0 4% 0); transform: translate(-3px, 1px); }
+    80%  { clip-path: inset(24% 0 55% 0); transform: translate(1px, -2px); }
+    100% { clip-path: inset(52% 0 22% 0); transform: translate(0, 0); }
+}
+
+.hero-description {
+    max-width: 820px;
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    margin-bottom: 26px;
+}
+
+.text-highlight {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.stat-box {
+    min-width: 150px;
+    padding: 10px 18px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--accent-secondary);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.stat-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   HACKING TERMINAL SEARCH BAR
+   ========================================================================== */
+.terminal-section {
+    margin-bottom: 44px;
+    background: var(--bg-terminal);
+    border: 1px solid var(--accent-border);
+    clip-path: polygon(
+        0 0,
+        calc(100% - 18px) 0,
+        100% 18px,
+        100% 100%,
+        14px 100%,
+        0 calc(100% - 14px)
+    );
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+}
+
+.terminal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-primary);
+}
+
+.terminal-dot {
+    width: 9px;
+    height: 9px;
+    display: inline-block;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.terminal-dot.red { background: var(--pink-neon); }
+.terminal-dot.yellow { background: var(--yellow-david); }
+.terminal-dot.cyan { background: var(--cyan-lucy); }
+
+.terminal-counter {
+    color: var(--text-muted);
+}
+
+.terminal-counter span {
+    color: var(--accent-secondary);
+    font-weight: 700;
+}
+
+.terminal-body {
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.terminal-prompt {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--cyan-lucy);
+    white-space: nowrap;
+}
+
+.prompt-cmd {
+    color: var(--pink-neon);
+}
+
+.terminal-input-wrap {
+    flex: 1;
+    min-width: 240px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 10px 14px;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.terminal-input-wrap:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 16px var(--accent-glow-soft);
+}
+
+.terminal-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    font-size: 0.98rem;
+    letter-spacing: 0.04em;
+}
+
+.terminal-input::placeholder {
+    color: var(--text-dim);
+}
+
+.terminal-cursor {
+    font-family: var(--font-mono);
+    color: var(--accent-primary);
+    text-shadow: 0 0 8px var(--accent-primary);
+    animation: cursorBlink 0.9s steps(2, start) infinite;
+    user-select: none;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.terminal-clear-btn {
+    background: var(--pink-neon);
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
+}
+
+/* ==========================================================================
+   PROJECT GRID & CLIPPED CYBERPUNK CARDS
+   ========================================================================== */
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent-primary);
+    white-space: nowrap;
+}
+
+.section-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--pink-neon), transparent);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.cyber-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 24px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-top: 3px solid var(--accent-primary);
+    clip-path: polygon(
+        0 0,
+        calc(100% - 22px) 0,
+        100% 22px,
+        100% 100%,
+        18px 100%,
+        0 calc(100% - 18px)
+    );
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cyber-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, transparent 50%, var(--accent-primary) 50%);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.cyber-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow:
+        0 0 20px var(--accent-glow-soft),
+        inset 0 0 18px var(--accent-glow-soft);
+    transform: translateY(-4px);
+}
+
+/* 0.2s Glitch Shake Triggered via JS on Hover */
+.cyber-card.card-glitching {
+    animation: cardGlitchShake 0.2s steps(2, end);
+}
+
+@keyframes cardGlitchShake {
+    0%   { transform: translate(0, 0) skewX(0deg); filter: hue-rotate(0deg); }
+    25%  { transform: translate(-4px, 2px) skewX(-2deg); filter: drop-shadow(3px 0 var(--pink-neon)); }
+    50%  { transform: translate(4px, -2px) skewX(2deg); filter: drop-shadow(-3px 0 var(--cyan-lucy)); }
+    75%  { transform: translate(-2px, -1px) skewX(-1deg); }
+    100% { transform: translate(0, -4px) skewX(0deg); filter: none; }
+}
+
+.card-topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+}
+
+.card-id {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.card-tier {
+    padding: 2px 8px;
+    background: rgba(255, 0, 60, 0.14);
+    border: 1px solid var(--pink-neon);
+    color: var(--pink-neon);
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+}
+
+.card-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    color: var(--accent-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.card-desc {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    margin-bottom: 22px;
+    flex-grow: 1;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.card-actions-multi {
+    flex-wrap: wrap;
+}
+
+/* Clipped Geometric Buttons with Neon Glow */
+.cyber-btn {
+    position: relative;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 11px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--accent-primary);
+    border-left: 4px solid var(--accent-primary);
+    color: var(--accent-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    clip-path: polygon(
+        0 0,
+        calc(100% - 12px) 0,
+        100% 12px,
+        100% 100%,
+        8px 100%,
+        0 calc(100% - 8px)
+    );
+    transition: all 0.2s ease;
+}
+
+.cyber-btn-sm {
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 125px;
+    justify-content: center;
+    padding: 9px 10px;
+    font-size: 0.72rem;
+}
+
+.cyber-btn:hover {
+    background: var(--accent-primary);
+    color: var(--text-on-accent);
+    box-shadow:
+        0 0 14px var(--accent-primary),
+        0 0 28px var(--accent-glow);
+    transform: translateX(2px);
+}
+
+.btn-arrow {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.cyber-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   EMPTY SEARCH STATE
+   ========================================================================== */
+.cyber-empty-state {
+    margin-top: 24px;
+    padding: 36px 24px;
+    text-align: center;
+    background: rgba(255, 0, 60, 0.06);
+    border: 1px dashed var(--pink-neon);
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+.empty-code {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--pink-neon);
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+}
+
+.empty-msg {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.cyber-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.85);
+    padding: 24px 28px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+}
+
+.footer-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-brand {
+    color: var(--accent-primary);
+    letter-spacing: 0.12em;
+}
+
+.footer-sig {
+    color: var(--accent-secondary);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 768px) {
+    .hud-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 8px 18px;
+    }
+
+    .header-container {
+        padding: 14px 18px;
+    }
+
+    .cyber-main {
+        padding: 24px 18px 60px;
+    }
+
+    .hero-hud-frame {
+        padding: 28px 20px;
+    }
+
+    .hero-hud-frame::before {
+        position: static;
+        display: block;
+        margin-bottom: 8px;
+    }
+}
