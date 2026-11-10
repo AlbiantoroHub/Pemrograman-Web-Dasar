@@ -19,6 +19,6 @@ jobs:
         env:
           WEBHOOK_KEY: ${{ secrets.AAPANEL_WEBHOOK_KEY }}
         run: |
-          curl -kfsS --retry 2 --retry-delay 3 \
-            -X POST \
-            "https://panel.myriset.my.id:25181/hook?access_key=${WEBHOOK_KEY}"
+          resp=$(curl -kfsS --retry 2 --retry-delay 3 -X POST "https://panel.myriset.my.id:25181/hook?access_key=${WEBHOOK_KEY}")
+          echo "Response: $resp"
+          echo "$resp" | grep -Eq '"code":[[:space:]]*1'
